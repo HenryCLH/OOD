@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/showImg"
             android:layout_marginTop="5dp"
-            android:text="用户名"
+
             android:textColor="@color/white" />
 
         <EditText
@@ -41,7 +41,7 @@
             android:background="@drawable/rounded"
             android:drawableLeft="@drawable/ic_at_symbol"
             android:drawablePadding="5dp"
-            android:hint="邮箱/手机号"
+            android:hint="Email/Phone"
             android:inputType="textEmailAddress"
             android:padding="10dp"
             android:selectAllOnFocus="true"
@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/username_edit"
             android:layout_marginTop="6dp"
-            android:text="密码"
+
             android:textColor="@color/white" />
 
         <EditText
@@ -67,7 +67,7 @@
             android:background="@drawable/rounded"
             android:drawableLeft="@drawable/ic_lock_closed"
             android:drawablePadding="5dp"
-            android:hint="密码"
+            android:hint="Password"
             android:inputType="textPassword"
             android:padding="10dp"
             android:selectAllOnFocus="true"
@@ -77,15 +77,15 @@
 
         <Button
             android:id="@+id/login_button"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/passwd_edit"
-            android:layout_alignRight="@id/passwd_edit"
             android:layout_marginTop="15dp"
             android:background="@drawable/button_blue"
-            android:letterSpacing="10"
+            android:layout_centerHorizontal="true"
             android:padding="10dp"
-            android:text="登录"
+            android:text="Sign in"
+            android:textAllCaps="false"
             android:textSize="15dp" />
 
         <TextView
@@ -95,8 +95,8 @@
             android:layout_below="@+id/login_button"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
-            android:text="忘记密码？"
-            android:textColor="#888"
+            android:text="Forgot password？"
+            android:textColor="#AF33FF"
             android:textColorLink="#FF0066CC" />
 
         <TextView
@@ -104,11 +104,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/login_button"
-            android:layout_alignRight="@+id/login_button"
+            android:layout_alignRight="@+id/passwd_edit"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
-            android:text="新用户注册"
-            android:textColor="#888"
+            android:text="New Account"
+            android:textColor="#AF33FF"
             android:textColorLink="#FF0066CC" />
 
         <TextView

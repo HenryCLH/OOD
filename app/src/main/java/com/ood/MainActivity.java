@@ -1,7 +1,10 @@
 package com.ood;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 
+
+import android.content.ClipData;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -14,10 +17,26 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
+    private DrawerLayout drawerLayout;
+    private ListView listLeftDrawer;
+    private ArrayList<ClipData.Item> menuLists;
+    private MyAdapter<ClipData.Item> myAdapter = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+//        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        listLeftDrawer = (ListView) findViewById(R.id.list_left_drawer);
+//        menuLists = new ArrayList<>();
+//        menuLists.add(new ClipData.Item("111", "账户信息"));
+//        myAdapter = new MyAdapter<ClipData.Item>() {
+//            @Override
+//            public void bindView(ViewHolder holder, ClipData.Item obj) {
+//                holder.setImageResource(R.id.imgtou, obj.get);
+//            }
+//        }
 
         String[] names = {"Likelihood", "News", "Symptom Log", "Medicines Log", "Doctor Visit Log", "Trip Log", "Friends News Log", "Take Out Log"};
         String[] says = new String[]{"test", "test", "test", "test", "test", "test","test", "test"};
