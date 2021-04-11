@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/login4">
+    <!-- padding 内边距   layout_margin 外边距
+        android:layout_alignParentTop 布局的位置是否处于顶部 -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="15dip"
+        android:padding="15dip">
+
+        <com.ImageViewdemo.RoundImageView
+            android:id="@+id/showImg"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:focusableInTouchMode="true" />
+
+
+        <TextView
+            android:id="@+id/login_user_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/showImg"
+            android:layout_marginTop="5dp"
+            android:text="用户名"
+            android:textColor="@color/white" />
+
+        <EditText
+            android:id="@+id/username_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/login_user_info"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/rounded"
+            android:drawableLeft="@drawable/ic_at_symbol"
+            android:drawablePadding="5dp"
+            android:hint="邮箱/手机号"
+            android:inputType="textEmailAddress"
+            android:padding="10dp"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textColorHint="@color/gray" />
+
+        <TextView
+            android:id="@+id/login_passwd_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/username_edit"
+            android:layout_marginTop="6dp"
+            android:text="密码"
+            android:textColor="@color/white" />
+
+        <EditText
+            android:id="@+id/passwd_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/login_passwd_info"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/rounded"
+            android:drawableLeft="@drawable/ic_lock_closed"
+            android:drawablePadding="5dp"
+            android:hint="密码"
+            android:inputType="textPassword"
+            android:padding="10dp"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textColorHint="@color/gray" />
+
+        <Button
+            android:id="@+id/login_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/passwd_edit"
+            android:layout_alignRight="@id/passwd_edit"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/button_blue"
+            android:letterSpacing="10"
+            android:padding="10dp"
+            android:text="登录"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/forgetPwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/login_button"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:text="忘记密码？"
+            android:textColor="#888"
+            android:textColorLink="#FF0066CC" />
+
+        <TextView
+            android:id="@+id/register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/login_button"
+            android:layout_alignRight="@+id/login_button"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:text="新用户注册"
+            android:textColor="#888"
+            android:textColorLink="#FF0066CC" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:text=""
+            android:textColor="#888" />
+    </RelativeLayout>
+
+
+</LinearLayout>
