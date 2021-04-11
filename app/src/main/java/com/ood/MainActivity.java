@@ -33,10 +33,17 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //创建一个simpleAdapter
-        SimpleAdapter myAdapter = new SimpleAdapter(getApplicationContext(), listitem, R.layout.list_item, new String[]{"touxiang", "name", "says"}, new int[]{R.id.imgtou, R.id.name, R.id.says});
+        //SimpleAdapter myAdapter = new SimpleAdapter(getApplicationContext(), listitem, R.layout.list_item, new String[]{"touxiang", "name", "says"}, new int[]{R.id.imgtou, R.id.name, R.id.says});
+        MyAdapter<Map<String, Object>> myAdapter = new MyAdapter<Map<String, Object>>((ArrayList) listitem, R.layout.list_item) {
+            @Override
+            public void bindView(ViewHolder holder, Map<String, Object> obj) {
+                holder.setText(R.id.name, (CharSequence) obj.get("name"));
+                holder.setText(R.id.says, (CharSequence) obj.get("says"));
+                holder.setImageResource(R.id.imgtou, (int) obj.get("touxiang"));
+            }
+        };
         ListView listView = (ListView) findViewById(R.id.list_test);
         listView.setAdapter(myAdapter);
-
     }
 }
 
