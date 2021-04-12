@@ -23,13 +23,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </com.scwang.smart.refresh.layout.SmartRefreshLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="test"></TextView>
-    </LinearLayout>
+    <ListView
+        android:id="@+id/list_test"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </ListView>
 </androidx.constraintlayout.widget.ConstraintLayout>
