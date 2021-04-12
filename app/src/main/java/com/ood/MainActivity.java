@@ -1,11 +1,16 @@
 package com.ood;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 
 import android.content.ClipData;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -15,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
 
     private DrawerLayout drawerLayout;
     private ListView listLeftDrawer;
@@ -27,19 +32,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        listLeftDrawer = (ListView) findViewById(R.id.list_left_drawer);
-//        menuLists = new ArrayList<>();
-//        menuLists.add(new ClipData.Item("111", "账户信息"));
-//        myAdapter = new MyAdapter<ClipData.Item>() {
-//            @Override
-//            public void bindView(ViewHolder holder, ClipData.Item obj) {
-//                holder.setImageResource(R.id.imgtou, obj.get);
-//            }
-//        }
-
         String[] names = {"Likelihood", "News", "Symptom Log", "Medicines Log", "Doctor Visit Log", "Trip Log", "Friends News Log", "Take Out Log"};
-        String[] says = new String[]{"test", "test", "test", "test", "test", "test","test", "test"};
+        String[] says = new String[]{"Low", "test", "test", "test", "test", "test","test", "test"};
         int[] imgIds = new int[]{R.mipmap.likelihood, R.mipmap.news, R.mipmap.symptom, R.mipmap.medicine, R.mipmap.doctor, R.mipmap.trip, R.mipmap.friends, R.mipmap.takeout};
 
         List<Map<String, Object>> listitem = new ArrayList<Map<String, Object>>();
@@ -63,6 +57,22 @@ public class MainActivity extends AppCompatActivity {
         };
         ListView listView = (ListView) findViewById(R.id.list_test);
         listView.setAdapter(myAdapter);
+        listView.setOnItemClickListener(this);
+    }
+
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        switch (position) {
+            case 0:
+                Intent intent = new Intent(MainActivity.this, LikelihoodActivity.class);
+                startActivity(intent);
+                break;
+            case 1:
+                Intent intent1 = new Intent(MainActivity.this, NewsActivity.class);
+                startActivity(intent1);
+                break;
+        }
     }
 }
 

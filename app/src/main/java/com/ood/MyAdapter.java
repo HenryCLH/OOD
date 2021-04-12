@@ -48,19 +48,6 @@ public abstract class MyAdapter<T> extends BaseAdapter {
                 , position);
         bindView(holder, (T)getItem(position));
         return holder.getItemView();
-//        ViewHolder holder = null;
-//        if (convertView == null) {
-//            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_list, parent, false);
-//            holder = new ViewHolder();
-//            holder.img_icon = (ImageView) convertView.findViewById(R.id.img_icon);
-//            holder.txt_content = (TextView) convertView.findViewById(R.id.txt_content);
-//            convertView.setTag(holder);
-//        } else {
-//            holder = (ViewHolder) convertView.getTag();
-//        }
-//        holder.img_icon.setImageResource(mData.get(position).getImgId());
-//        holder.txt_content.setText(mData.get(position).getContent());
-//        return convertView;
     }
 
     public abstract void bindView(ViewHolder holder, T obj);
