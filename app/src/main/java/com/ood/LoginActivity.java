@@ -18,6 +18,10 @@ import com.ImageViewdemo.RoundImageView;
 import com.ood.MyAdapter;
 import com.ood.R;
 
+import org.apache.http.util.EncodingUtils;
+
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,23 +34,30 @@ public class LoginActivity extends AppCompatActivity {
     private RoundImageView roundImageView;
     private TextView vUserName;
     private TextView vPassword;
+    private TextView vNewAccount;
+    private TextView vMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
         btnLogin = (Button)findViewById(R.id.login_button);
+        vNewAccount = findViewById(R.id.register);
         roundImageView = (RoundImageView) findViewById(R.id.showImg);
         vPassword = findViewById(R.id.passwd_edit);
         vUserName = findViewById(R.id.username_edit);
+        vMessage = findViewById(R.id.message);
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.xiaohui);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // get userData from database
                 Map<String, String> userData = new HashMap<>();
-                InputStream inputStream = getResources().openRawResource(R.raw.user_data);
-                userData = fileReader.getUserData(inputStream);
+                try {
+                    userData = readFile("userData");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 // fetch user input
                 String userName = vUserName.getText().toString();
                 String password = vPassword.getText().toString();
@@ -54,8 +65,40 @@ public class LoginActivity extends AppCompatActivity {
                 if (userData.containsKey(userName) && userData.get(userName).equals(password)) {
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
+                } else {
+                    vMessage.setText("Oops! You email/phone or password is incorrect");
                 }
             }
         });
+
+        vNewAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    public Map<String, String> readFile(String fileName) throws IOException {
+        String res="";
+        try{
+            FileInputStream fin = openFileInput(fileName);
+            int length = fin.available();
+            byte [] buffer = new byte[length];
+            fin.read(buffer);
+            //设置编码格式
+            res = EncodingUtils.getString(buffer, "UTF-8");
+            fin.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        String[] rawData = res.split("\n");
+        Map<String, String> map = new HashMap<>();
+        for (String data : rawData) {
+            String[] temp = data.split(" ");
+            map.put(temp[0], temp[1]);
+        }
+        return map;
     }
 }
