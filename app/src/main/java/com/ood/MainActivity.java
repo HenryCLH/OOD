@@ -1,8 +1,8 @@
 package com.ood;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentManager;
 
 
 import android.content.ClipData;
@@ -11,8 +11,11 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.view.MenuItem;
 import android.widget.SimpleAdapter;
 
 import java.util.ArrayList;
@@ -24,14 +27,40 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private DrawerLayout drawerLayout;
     private ListView listLeftDrawer;
-    private ArrayList<ClipData.Item> menuLists;
-    private MyAdapter<ClipData.Item> myAdapter = null;
+    //private MyAdapter<ClipData.Item> myAdapter = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        listLeftDrawer = (ListView) findViewById(R.id.list_left_drawer);
+
+        Map<String, Object> item1 = new HashMap<>();
+        item1.put("touxiang", R.mipmap.userinfo);
+        item1.put("name", "Account Info");
+        item1.put("says", "");
+        Map<String, Object> item2 = new HashMap<>();
+        item2.put("touxiang", R.mipmap.logout);
+        item2.put("name", "Log out");
+        item2.put("says", "");
+        List<Map<String, Object>> leftList = new ArrayList<Map<String, Object>>();
+        leftList.add(item1);
+        leftList.add(item2);
+        MyAdapter<Map<String, Object>> myAdapter = new MyAdapter<Map<String, Object>>((ArrayList) leftList, R.layout.list_item) {
+            @Override
+            public void bindView(ViewHolder holder, Map<String, Object> obj) {
+                holder.setText(R.id.name, (CharSequence) obj.get("name"));
+                holder.setText(R.id.says, (CharSequence) obj.get("says"));
+                holder.setImageResource(R.id.imgtou, (int) obj.get("touxiang"));
+            }
+        };
+        listLeftDrawer.setAdapter(myAdapter);
+        listLeftDrawer.setOnItemClickListener(this);
+
+
+        // main page list view set up
         String[] names = {"Likelihood", "News", "Symptom Log", "Medicines Log", "Doctor Visit Log", "Trip Log", "Friends News Log", "Take Out Log"};
         String[] says = new String[]{"Low", "test", "test", "test", "test", "test","test", "test"};
         int[] imgIds = new int[]{R.mipmap.likelihood, R.mipmap.news, R.mipmap.symptom, R.mipmap.medicine, R.mipmap.doctor, R.mipmap.trip, R.mipmap.friends, R.mipmap.takeout};
@@ -73,6 +102,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 startActivity(intent1);
                 break;
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if (position == 1) {
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }
+        drawerLayout.closeDrawer(listLeftDrawer);
     }
 }
 
