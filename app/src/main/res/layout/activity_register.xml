@@ -36,7 +36,7 @@
             android:id="@+id/message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/passwd_edit"
+            android:layout_below="@+id/repassword_edit"
             android:layout_marginTop="6dp"
             android:textColor="#ff0000"/>
 
@@ -51,6 +51,23 @@
             android:drawablePadding="5dp"
             android:hint="Email/Phone"
             android:inputType="textEmailAddress"
+            android:padding="10dp"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textColorHint="@color/gray" />
+
+        <EditText
+            android:id="@+id/repassword_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/passwd_edit"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/rounded"
+            android:drawableLeft="@drawable/ic_lock_closed"
+            android:drawablePadding="5dp"
+            android:hint="Comfirm password"
+            android:inputType="textPassword"
             android:padding="10dp"
             android:selectAllOnFocus="true"
             android:singleLine="true"

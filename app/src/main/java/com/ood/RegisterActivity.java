@@ -21,6 +21,7 @@ public class RegisterActivity extends AppCompatActivity {
     private TextView vUsername;
     private TextView vPassword;
     private TextView vMessage;
+    private TextView vRepassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,13 +32,17 @@ public class RegisterActivity extends AppCompatActivity {
         vUsername = findViewById(R.id.username_edit);
         vPassword = findViewById(R.id.passwd_edit);
         vMessage = findViewById(R.id.message);
+        vRepassword = findViewById(R.id.repassword_edit);
 
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String userName = vUsername.getText().toString();
                 String password = vPassword.getText().toString();
-                if (!checkValidation(userName)) {
+                String rePassword = vRepassword.getText().toString();
+                if (!password.equals(rePassword)) {
+                    vMessage.setText("Your password and confirmation password do not match");
+                } else if (!checkValidation(userName)) {
                     vMessage.setText("Please enter valid email/phone");
                 } else {
                     try {
