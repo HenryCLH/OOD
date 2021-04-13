@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private DrawerLayout drawerLayout;
     private ListView listLeftDrawer;
@@ -60,9 +60,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         listLeftDrawer.setOnItemClickListener(this);
 
 
+
         // main page list view set up
         String[] names = {"Likelihood", "News", "Symptom Log", "Medicines Log", "Doctor Visit Log", "Trip Log", "Friends News Log", "Take Out Log"};
-        String[] says = new String[]{"Low", "test", "test", "test", "test", "test","test", "test"};
+        String[] says = new String[]{"Low", "test", "test", "test", "test", "test", "test", "test"};
         int[] imgIds = new int[]{R.mipmap.likelihood, R.mipmap.news, R.mipmap.symptom, R.mipmap.medicine, R.mipmap.doctor, R.mipmap.trip, R.mipmap.friends, R.mipmap.takeout};
 
         List<Map<String, Object>> listitem = new ArrayList<Map<String, Object>>();
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         //创建一个simpleAdapter
         //SimpleAdapter myAdapter = new SimpleAdapter(getApplicationContext(), listitem, R.layout.list_item, new String[]{"touxiang", "name", "says"}, new int[]{R.id.imgtou, R.id.name, R.id.says});
-        MyAdapter<Map<String, Object>> myAdapter = new MyAdapter<Map<String, Object>>((ArrayList) listitem, R.layout.list_item) {
+        MyAdapter<Map<String, Object>> myAdapter1 = new MyAdapter<Map<String, Object>>((ArrayList) listitem, R.layout.list_item) {
             @Override
             public void bindView(ViewHolder holder, Map<String, Object> obj) {
                 holder.setText(R.id.name, (CharSequence) obj.get("name"));
@@ -85,34 +86,43 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             }
         };
         ListView listView = (ListView) findViewById(R.id.list_test);
-        listView.setAdapter(myAdapter);
+        listView.setAdapter(myAdapter1);
         listView.setOnItemClickListener(this);
     }
 
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        switch (position) {
-            case 0:
-                Intent intent = new Intent(MainActivity.this, LikelihoodActivity.class);
+        if (parent == listLeftDrawer) {
+            if (position == 1) {
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
-                break;
-            case 1:
-                Intent intent1 = new Intent(MainActivity.this, NewsActivity.class);
-                startActivity(intent1);
-                break;
+            }
+            drawerLayout.closeDrawer(listLeftDrawer);
+        } else {
+            switch (position) {
+                case 0:
+                    Intent intent = new Intent(MainActivity.this, LikelihoodActivity.class);
+                    startActivity(intent);
+                    break;
+                case 1:
+                    Intent intent1 = new Intent(MainActivity.this, NewsActivity.class);
+                    startActivity(intent1);
+                    break;
+            }
         }
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (position == 1) {
-            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(intent);
-        }
-        drawerLayout.closeDrawer(listLeftDrawer);
     }
 }
+
+//    @Override
+//    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//        if (position == 1) {
+//            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+//            startActivity(intent);
+//        }
+//        drawerLayout.closeDrawer(listLeftDrawer);
+//    }
+//}
 
 // This is a test comment by CLH
 // This is a test comment by Jin

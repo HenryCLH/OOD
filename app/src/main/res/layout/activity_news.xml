@@ -5,27 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".NewsActivity">
-
     <com.scwang.smart.refresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <com.scwang.smart.refresh.header.ClassicsHeader
+        <ListView
+            android:id="@+id/list_test"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:overScrollMode="never"
-            android:background="#fff" />
-        <com.scwang.smart.refresh.footer.ClassicsFooter
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent">
+        </ListView>
     </com.scwang.smart.refresh.layout.SmartRefreshLayout>
-    <ListView
-        android:id="@+id/list_test"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </ListView>
 </androidx.constraintlayout.widget.ConstraintLayout>
