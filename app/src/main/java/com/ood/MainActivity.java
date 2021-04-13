@@ -72,6 +72,36 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 Intent intent1 = new Intent(MainActivity.this, NewsActivity.class);
                 startActivity(intent1);
                 break;
+            case 2:
+                Intent symptomIntent = new Intent(MainActivity.this, LogDashboard.class);
+                symptomIntent.putExtra("type", 2);
+                startActivity(symptomIntent);
+                break;
+            case 3:
+                Intent medicinesIntent = new Intent(MainActivity.this, LogDashboard.class);
+                medicinesIntent.putExtra("type", 3);
+                startActivity(medicinesIntent);
+                break;
+            case 4:
+                Intent doctorVisitIntent = new Intent(MainActivity.this, LogDashboard.class);
+                doctorVisitIntent.putExtra("type", 4);
+                startActivity(doctorVisitIntent);
+                break;
+            case 5:
+                Intent tripIntent = new Intent(MainActivity.this, LogDashboard.class);
+                tripIntent.putExtra("type", 5);
+                startActivity(tripIntent);
+                break;
+            case 6:
+                Intent friendsNewsIntent = new Intent(MainActivity.this, LogDashboard.class);
+                friendsNewsIntent.putExtra("type", 6);
+                startActivity(friendsNewsIntent);
+                break;
+            case 7:
+                Intent takeOutIntent = new Intent(MainActivity.this, LogDashboard.class);
+                takeOutIntent.putExtra("type", 7);
+                startActivity(takeOutIntent);
+                break;
         }
     }
 }
