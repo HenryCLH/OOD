@@ -29,7 +29,7 @@ android {
 }
 
 dependencies {
-    compile 'org.apache.httpcomponents:httpcore:4.4.4'
+    implementation 'org.apache.httpcomponents:httpcore:4.4.4'
     // add new
     implementation 'androidx.appcompat:appcompat:1.0.0'
     implementation  'com.scwang.smart:refresh-layout-kernel:2.0.3'      //核心必须依赖

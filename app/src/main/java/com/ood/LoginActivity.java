@@ -62,7 +62,8 @@ public class LoginActivity extends AppCompatActivity {
                 String userName = vUserName.getText().toString();
                 String password = vPassword.getText().toString();
                 // check validation
-                if (userData.containsKey(userName) && userData.get(userName).equals(password)) {
+                if ( userData != null && userData.size() != 0 &&
+                        userData.containsKey(userName) && userData.get(userName).equals(password)) {
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                 } else {
@@ -92,6 +93,7 @@ public class LoginActivity extends AppCompatActivity {
             fin.close();
         }catch(Exception e){
             e.printStackTrace();
+            return null;
         }
         String[] rawData = res.split("\n");
         Map<String, String> map = new HashMap<>();
