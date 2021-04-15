@@ -29,6 +29,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -146,7 +147,19 @@ public class LogDashboard extends AppCompatActivity implements AdapterView.OnIte
         EditText logNameText = (EditText) logView.findViewById(R.id.createSymptomLogName);
         EditText logDescriptionText = (EditText) logView.findViewById(R.id.createSymptomLogDescription);
 
+        Calendar calendar = Calendar.getInstance();
+
         TextView showDate = (TextView) logView.findViewById(R.id.showDate);
+        String defaultDate = "";
+        int defaultYear = calendar.get(Calendar.YEAR), defaultMonth = calendar.get(Calendar.MONTH) + 1, defaultDay = calendar.get(Calendar.DAY_OF_MONTH);
+        defaultDate += defaultYear + "-";
+        if(defaultMonth < 10)
+            defaultDate += "0";
+        defaultDate += defaultMonth + "-";
+        if(defaultDay < 10)
+            defaultDate += "0";
+        defaultDate += defaultDay;
+        showDate.setText(defaultDate);
         final int[] date = new int[3];
         showDate.setOnClickListener(new View.OnClickListener()
         {
@@ -174,7 +187,12 @@ public class LogDashboard extends AppCompatActivity implements AdapterView.OnIte
                         date[0] = datePicker.getYear();
                         date[1] = datePicker.getMonth() + 1;
                         date[2] = datePicker.getDayOfMonth();
-                        showDate.setText(date[0] + "-" + date[1] + "-" + date[2]);
+                        String t1 = "", t2 = "";
+                        if(date[1] < 10)
+                            t1 = "0";
+                        if(date[2] < 10)
+                            t2 = "0";
+                        showDate.setText(date[0] + "-" + t1 + date[1] + "-" + t2 + date[2]);
                     }
                 });
 
@@ -184,6 +202,25 @@ public class LogDashboard extends AppCompatActivity implements AdapterView.OnIte
         });
 
         TextView showTime = (TextView) logView.findViewById(R.id.showTime);
+        String defaultTime = "";
+        int defaultHour = calendar.get(Calendar.HOUR_OF_DAY), defaultMinute = calendar.get(Calendar.MINUTE);
+        String tmpam_pm = "";
+        if(defaultHour < 12) {
+            if(defaultHour == 0)
+                defaultHour += 12;
+            tmpam_pm = " AM";
+        }
+        else {
+            defaultHour -= 12;
+            tmpam_pm = " PM";
+        }
+        if(defaultHour < 10)
+            defaultTime += "0";
+        defaultTime += defaultHour + ":";
+        if(defaultMinute < 10)
+            defaultTime += "0";
+        defaultTime += defaultMinute + tmpam_pm;
+        showTime.setText(defaultTime);
         final int[] time = new int[2];
         showTime.setOnClickListener(new View.OnClickListener()
         {
@@ -238,15 +275,21 @@ public class LogDashboard extends AppCompatActivity implements AdapterView.OnIte
         builder.setPositiveButton("Create", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                log = logNameText.getText().toString() + " ;" + showDate.getText().toString() + " " + showTime.getText().toString() + ";" + logDescriptionText.getText().toString() + " ;;\n";
-                try {
-                    FileOutputStream out = openFileOutput(logFile.getName().toString(), MODE_APPEND);
-                    out.write(log.getBytes());
-                    out.close();
-                    loadLogFile();
-                    logAdapter.notifyDataSetChanged();
-                } catch (Exception e) {
-                    System.out.println("Write Log File Failed!!!");
+                if(showDate.getText().toString().equals("") || showTime.getText().toString().equals(""))
+                {
+                    System.out.println("TEST");
+                }
+                else {
+                    log = logNameText.getText().toString() + " ;" + showDate.getText().toString() + " " + showTime.getText().toString() + ";" + logDescriptionText.getText().toString() + " ;;\n";
+                    try {
+                        FileOutputStream out = openFileOutput(logFile.getName().toString(), MODE_APPEND);
+                        out.write(log.getBytes());
+                        out.close();
+                        loadLogFile();
+                        logAdapter.notifyDataSetChanged();
+                    } catch (Exception e) {
+                        System.out.println("Write Log File Failed!!!");
+                    }
                 }
             }
         });
