@@ -162,74 +162,79 @@ public class NewsActivity extends AppCompatActivity implements AdapterView.OnIte
 //    protected void onCreate(Bundle savedInstanceState) {
 //        super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_news);
-//        System.out.println("=====");
-//        try {
-//            fetchData();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        RefreshLayout refreshLayout = (RefreshLayout)findViewById(R.id.refreshLayout);
-//        refreshLayout.setRefreshHeader(new ClassicsHeader(this));
-//        refreshLayout.setRefreshFooter(new ClassicsFooter(this));
-//        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
-//            @Override
-//            public void onRefresh(RefreshLayout refreshlayout) {
-//                if(getNewData()) {
-//                    refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
-//                    NewsActivity.super.onResume();
-//                    //onCreate(null);
-//                }
-//            }
-//        });
-//        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
-//            @Override
-//            public void onLoadMore(RefreshLayout refreshlayout) {
-//                refreshlayout.finishLoadMore(2000/*,false*/);//传入false表示加载失败
-//            }
-//        });
-//    }
-//
-//    private boolean getNewData() {
-//        return true;
-//    }
-//
-//
-//    public void fetchData() throws IOException {
-////        if(!isNetworkAvailable(this))
-////            return;
-////        System.out.println("go into fetch===========");
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                    String url = "https://www.cnn.com/health";
-//                    Connection conn = Jsoup.connect(url);
-//                    // 修改http包中的header,伪装成浏览器进行抓取
-//                    conn.header("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:32.0) Gecko/    20100101 Firefox/32.0");
-//                    Document doc = null;
-//                    doc = conn.get();
-//                    System.out.println("test=============2");
-//                    // 获取tbody元素下的所有tr元素
-//                    Elements elements = doc.select("tbody tr");
-//                    for(Element element : elements) {
-//                        String companyName = element.getElementsByTag("company").text();
-//                        String time = element.select("td.text-center").first().text();
-//                        String address = element.getElementsByClass("preach-tbody-addre").text();
-//
-//                        System.out.println("公司："+companyName);
-//                        System.out.println("宣讲时间："+time);
-//                        System.out.println("宣讲学校：华中科技大学");
-//                        System.out.println("具体地点："+address);
-//                        System.out.println("---------------------------------");
-//                        break;
-//                    }
-//                } catch (IOException e) {
-//                    //Toast.makeText(NewsActivity.this,"无法连接网络",Toast.LENGTH_SHORT).show();
-//                    e.printStackTrace();
-//                }
-//            }
-//        }).start();
+//        String[] title = {"CDC vaccine advisers put off decision on Johnson & Johnson Covid-19 vaccine"};
+//        int[] imgs = {R.mipmap.cnnnewspic};
+////        try {
+////            fetchData();
+////        } catch (IOException e) {
+////            e.printStackTrace();
+////        }
+////
+////        RefreshLayout refreshLayout = (RefreshLayout)findViewById(R.id.refreshLayout);
+////        refreshLayout.setRefreshHeader(new ClassicsHeader(this));
+////        refreshLayout.setRefreshFooter(new ClassicsFooter(this));
+////        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+////            @Override
+////            public void onRefresh(RefreshLayout refreshlayout) {
+////                if(getNewData()) {
+////                    refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
+////                    NewsActivity.super.onResume();
+////                    //onCreate(null);
+////                }
+////            }
+////        });
+////        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+////            @Override
+////            public void onLoadMore(RefreshLayout refreshlayout) {
+////                refreshlayout.finishLoadMore(2000/*,false*/);//传入false表示加载失败
+////            }
+////        });
+////    }
+////
+////    private boolean getNewData() {
+////        return true;
+////    }
+////
+////
+////    public void fetchData() throws IOException {
+//////        if(!isNetworkAvailable(this))
+//////            return;
+//////        System.out.println("go into fetch===========");
+////        new Thread(new Runnable() {
+////            @Override
+////            public void run() {
+////                try {
+////                    String url = "https://www.cnn.com/health";
+////                    Connection conn = Jsoup.connect(url);
+////                    // 修改http包中的header,伪装成浏览器进行抓取
+////                    conn.header("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:32.0) Gecko/    20100101 Firefox/32.0");
+////                    Document doc = null;
+////                    doc = conn.get();
+////                    System.out.println("test=============2");
+////                    // 获取tbody元素下的所有tr元素
+////                    Elements elements = doc.getElementsByClass("media");
+////                    for(Element element:elements) {
+////
+////                    }
+//////                    Elements elements = doc.select("tbody tr");
+//////                    for(Element element : elements) {
+//////                        String companyName = element.getElementsByTag("company").text();
+//////                        String time = element.select("td.text-center").first().text();
+//////                        String address = element.getElementsByClass("preach-tbody-addre").text();
+//////
+//////                        System.out.println("公司："+companyName);
+//////                        System.out.println("宣讲时间："+time);
+//////                        System.out.println("宣讲学校：华中科技大学");
+//////                        System.out.println("具体地点："+address);
+//////                        System.out.println("---------------------------------");
+//////                        break;
+//////                    }
+////                } catch (IOException e) {
+////                    //Toast.makeText(NewsActivity.this,"无法连接网络",Toast.LENGTH_SHORT).show();
+////                    e.printStackTrace();
+////                }
+////            }
+////        }).start();
 //
 //
 //    }

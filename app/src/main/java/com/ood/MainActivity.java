@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private DrawerLayout drawerLayout;
     private ListView listLeftDrawer;
-    private String userName;
     //private MyAdapter<ClipData.Item> myAdapter = null;
 
     private String userName = "1001";
