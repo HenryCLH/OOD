@@ -17,7 +17,7 @@
             android:layout_weight="1"
             android:textColor="#1D1D1C"
             android:textSize="20sp"
-            android:text="Symptom Name:"/>
+            android:text="Medicine Name:"/>
 
         <EditText
             android:layout_width="0dp"
@@ -86,7 +86,7 @@
         android:paddingTop="12dp"
         android:paddingLeft="8dp"
         android:textColor="#1D1D1C"
-        android:text="Desciption:"
+        android:text="Medication Plan:"
         android:textSize="20sp"/>
 
     <EditText
