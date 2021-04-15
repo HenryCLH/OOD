@@ -17,7 +17,7 @@
             android:layout_weight="1"
             android:textColor="#1D1D1C"
             android:textSize="20sp"
-            android:text="Symptom Name:"/>
+            android:text="Friend Name:"/>
 
         <EditText
             android:layout_width="0dp"

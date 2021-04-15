@@ -58,20 +58,47 @@ public class LogDashboard extends AppCompatActivity implements AdapterView.OnIte
         logType = intent.getIntExtra("type", 0);
 
         logDir = getDir(userId, Context.MODE_PRIVATE);
+        String path = "/tmp";
         switch(logType)
         {
             case 2:
             {
-                logFile = new File(logDir.getPath() + "/symptomLog");
-                if(!logFile.exists())
-                {
-                    try {
-                        logFile.createNewFile();
-                    } catch (IOException e) {
-                        System.out.println("Create Log File Failed!!!");
-                    }
-                }
+                path = "/symptomLog";
                 break;
+            }
+            case 3:
+            {
+                path = "/medicineLog";
+                break;
+            }
+            case 4:
+            {
+                path = "/doctorVisitLog";
+                break;
+            }
+            case 5:
+            {
+                path = "/tripLog";
+                break;
+            }
+            case 6:
+            {
+                path = "/friendsNewsLog";
+                break;
+            }
+            case 7:
+            {
+                path = "/takeOutLog";
+                break;
+            }
+        }
+        logFile = new File(logDir.getPath() + path);
+        if(!logFile.exists())
+        {
+            try {
+                logFile.createNewFile();
+            } catch (IOException e) {
+                System.out.println("Create Log File Failed!!!");
             }
         }
 
@@ -101,15 +128,7 @@ public class LogDashboard extends AppCompatActivity implements AdapterView.OnIte
                             for(int i = 0; i < logList.size(); i++)
                             {
                                 Map<String, String> tmpItem = logList.get(i);
-                                switch(logType)
-                                {
-                                    case 2:
-                                    {
-                                        tmps += tmpItem.get("logName") + " ;" + tmpItem.get("logTime") + ";" + tmpItem.get("log") + ";;\n";
-                                        break;
-                                    }
-                                    //TODO
-                                }
+                                tmps += tmpItem.get("logName") + " ;" + tmpItem.get("logTime") + ";" + tmpItem.get("log") + ";;\n";
                             }
                             out.write(tmps.getBytes());
                             out.close();
@@ -140,12 +159,46 @@ public class LogDashboard extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        //TODO
         AlertDialog.Builder builder = new AlertDialog.Builder(LogDashboard.this);
-        View logView = LayoutInflater.from(LogDashboard.this).inflate(R.layout.create_symptom_log, null);
 
-        EditText logNameText = (EditText) logView.findViewById(R.id.createSymptomLogName);
-        EditText logDescriptionText = (EditText) logView.findViewById(R.id.createSymptomLogDescription);
+        int logViewId = 0;
+
+        switch(logType)
+        {
+            case 2:
+            {
+                logViewId = R.layout.create_symptom_log;
+                break;
+            }
+            case 3:
+            {
+                logViewId = R.layout.create_medicine_log;
+                break;
+            }
+            case 4:
+            {
+                logViewId = R.layout.create_doctor_visit_log;
+                break;
+            }
+            case 5:
+            {
+                logViewId = R.layout.create_trip_log;
+                break;
+            }
+            case 6:
+            {
+                logViewId = R.layout.create_friends_news_log;
+                break;
+            }
+            case 7:
+            {
+                logViewId = R.layout.create_take_out_log;
+                break;
+            }
+        }
+        View logView = LayoutInflater.from(LogDashboard.this).inflate(logViewId, null);
+        EditText logNameText = (EditText) logView.findViewById(R.id.createLogName);
+        EditText logDescriptionText = (EditText) logView.findViewById(R.id.createLogDescription);
 
         Calendar calendar = Calendar.getInstance();
 
@@ -275,21 +328,16 @@ public class LogDashboard extends AppCompatActivity implements AdapterView.OnIte
         builder.setPositiveButton("Create", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if(showDate.getText().toString().equals("") || showTime.getText().toString().equals(""))
-                {
-                    System.out.println("TEST");
-                }
-                else {
-                    log = logNameText.getText().toString() + " ;" + showDate.getText().toString() + " " + showTime.getText().toString() + ";" + logDescriptionText.getText().toString() + " ;;\n";
-                    try {
-                        FileOutputStream out = openFileOutput(logFile.getName().toString(), MODE_APPEND);
-                        out.write(log.getBytes());
-                        out.close();
-                        loadLogFile();
-                        logAdapter.notifyDataSetChanged();
-                    } catch (Exception e) {
-                        System.out.println("Write Log File Failed!!!");
-                    }
+                log = logNameText.getText().toString() + " ;" + showDate.getText().toString() + " " + showTime.getText().toString() + ";" + logDescriptionText.getText().toString() + " ;;\n";
+                try {
+                    FileOutputStream out = openFileOutput(logFile.getName().toString(), MODE_APPEND);
+                    System.out.println(log);
+                    out.write(log.getBytes());
+                    out.close();
+                    loadLogFile();
+                    logAdapter.notifyDataSetChanged();
+                } catch (Exception e) {
+                    System.out.println("Write Log File Failed!!!");
                 }
             }
         });
@@ -304,39 +352,52 @@ public class LogDashboard extends AppCompatActivity implements AdapterView.OnIte
     public void onItemClick(AdapterView<?> parent, View view, int position, long id)
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(LogDashboard.this);
-        switch(logType)
+        Button deleteButton = (Button) view.findViewById(R.id.deleteButon);
+        if(visibleButton != null)
         {
-            case 2:
+            visibleButton.setVisibility(View.INVISIBLE);
+            visibleButton = null;
+        }
+        else {
+            Map<String, String> logItem = logList.get(position);
+            int tmpId = 0;
+            switch(logType)
             {
-                Button deleteButton = (Button) view.findViewById(R.id.deleteButon);
-                if(visibleButton != null)
+                case 2: {
+                    tmpId = R.layout.symptom_log;
+                    break;
+                }
+                case 3: {
+                    tmpId = R.layout.medicine_log;
+                    break;
+                }
+                case 4: {
+                    tmpId = R.layout.doctor_visit_log;
+                    break;
+                }
+                case 5:
                 {
-                    visibleButton.setVisibility(View.INVISIBLE);
-                    visibleButton = null;
+                    tmpId = R.layout.trip_log;
+                    break;
                 }
-                else {
-                    Map<String, String> logItem = logList.get(position);
-
-                    View logView = LayoutInflater.from(LogDashboard.this).inflate(R.layout.symptom_log, null);
-
-                    TextView logName = (TextView) logView.findViewById(R.id.symptomLogName);
-                    String s = logItem.get("logName");
-                    logName.setText(logItem.get("logName"));
-                    TextView logTime = (TextView) logView.findViewById(R.id.symptomLogTime);
-                    logTime.setText(logItem.get("logTime"));
-                    TextView logDescription = (TextView) logView.findViewById(R.id.symptomLogDescription);
-                    logDescription.setText(logItem.get("log"));
-
-                    builder.setView(logView);
-                    builder.show();
+                case 6:
+                {
+                    tmpId = R.layout.friends_news_log;
+                    break;
                 }
-                break;
+                case 7:
+                {
+                    tmpId = R.layout.take_out_log;
+                    break;
+                }
             }
-            case 3:
-            {
 
-                break;
-            }
+            View logView = LayoutInflater.from(LogDashboard.this).inflate(tmpId, null);;
+            ((TextView) logView.findViewById(R.id.logName)).setText(logItem.get("logName"));
+            ((TextView) logView.findViewById(R.id.logTime)).setText(logItem.get("logTime"));
+            ((TextView) logView.findViewById(R.id.logDescription)).setText(logItem.get("log"));
+            builder.setView(logView);
+            builder.show();
         }
     }
 
@@ -360,29 +421,22 @@ public class LogDashboard extends AppCompatActivity implements AdapterView.OnIte
             int length = in.available();
             byte [] buffer = new byte[length];
             in.read(buffer);
-            String[] logs = (new String(buffer)).split(";;\n");
             in.close();
+            String[] logs = (new String(buffer)).split(";;\n");
 
-            switch(logType)
+            for(int i = 0; i < logs.length; i++)
             {
-                case 2:
-                {
-                    for(int i = 0; i < logs.length; i++)
-                    {
-                        Map<String, String> logItem = new HashMap<String, String>();
-                        String[] s = logs[i].split(";");
-                        logItem.put("logName", s[0]);
-                        logItem.put("logTime", s[1]);
-                        logItem.put("log", s[2]);
-                        logList.add(logItem);
-                    }
-                    break;
-                }
-                //TODO
+                Map<String, String> logItem = new HashMap<String, String>();
+                String[] s = logs[i].split(";");
+                logItem.put("logName", s[0]);
+                logItem.put("logTime", s[1]);
+                logItem.put("log", s[2]);
+                logList.add(logItem);
             }
         } catch (Exception e) {
             System.out.println("Read Log File Failed!!!");
         }
+
         Collections.sort(logList, new Comparator<Map<String, String>>()
         {
             @Override

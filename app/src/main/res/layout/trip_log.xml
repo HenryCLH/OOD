@@ -35,7 +35,7 @@
         android:paddingTop="12dp"
         android:paddingLeft="8dp"
         android:textColor="#1D1D1C"
-        android:text="Desciption:"
+        android:text="Companion:"
         android:textSize="20sp"/>
 
     <TextView
