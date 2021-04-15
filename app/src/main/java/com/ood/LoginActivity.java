@@ -64,8 +64,10 @@ public class LoginActivity extends AppCompatActivity {
                 // check validation
                 if ( userData != null && userData.size() != 0 &&
                         userData.containsKey(userName) && userData.get(userName).equals(password)) {
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        String hashcode = String.valueOf(userName.hashCode());
+                        intent.putExtra("userName", hashcode);
+                        startActivity(intent);
                 } else {
                     vMessage.setText("Oops! You email/phone or password is incorrect");
                 }

@@ -27,13 +27,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private DrawerLayout drawerLayout;
     private ListView listLeftDrawer;
+    private String userName;
     //private MyAdapter<ClipData.Item> myAdapter = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        Intent intent = getIntent();
+        userName = intent.getStringExtra("userName");
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         listLeftDrawer = (ListView) findViewById(R.id.list_left_drawer);
 
