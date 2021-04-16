@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager;
 
 
 import android.content.ClipData;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -18,6 +19,9 @@ import android.widget.ListView;
 import android.view.MenuItem;
 import android.widget.SimpleAdapter;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,10 +32,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private DrawerLayout drawerLayout;
     private ListView listLeftDrawer;
-    //private MyAdapter<ClipData.Item> myAdapter = null;
 
     private String userName = "1001";
     private String nameString = "";
+
+    private List<Map<String, Object>> listitem;
+    private MyAdapter<Map<String, Object>> myAdapter1;
+
+    private String[] risk;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +51,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         listLeftDrawer = (ListView) findViewById(R.id.list_left_drawer);
-
 
         Map<String, Object> item1 = new HashMap<>();
         item1.put("touxiang", R.mipmap.userinfo);
@@ -69,22 +76,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
 
         // main page list view set up
-        String[] names = {"Likelihood", "News", "Symptom Log", "Medicines Log", "Doctor Visit Log", "Trip Log", "Friends News Log", "Take Out Log"};
-        String[] says = new String[]{"Low", "test", "test", "test", "test", "test", "test", "test"};
-        int[] imgIds = new int[]{R.mipmap.likelihood, R.mipmap.news, R.mipmap.symptom, R.mipmap.medicine, R.mipmap.doctor, R.mipmap.trip, R.mipmap.friends, R.mipmap.takeout};
-
-        List<Map<String, Object>> listitem = new ArrayList<Map<String, Object>>();
-        for (int i = 0; i < names.length; i++) {
-            Map<String, Object> showitem = new HashMap<String, Object>();
-            showitem.put("touxiang", imgIds[i]);
-            showitem.put("name", names[i]);
-            showitem.put("says", says[i]);
-            listitem.add(showitem);
-        }
+        risk = new String[]{"0", "0", "0", "0", "0", "0"};
+        listitem = new ArrayList<Map<String, Object>>();
 
         //创建一个simpleAdapter
         //SimpleAdapter myAdapter = new SimpleAdapter(getApplicationContext(), listitem, R.layout.list_item, new String[]{"touxiang", "name", "says"}, new int[]{R.id.imgtou, R.id.name, R.id.says});
-        MyAdapter<Map<String, Object>> myAdapter1 = new MyAdapter<Map<String, Object>>((ArrayList) listitem, R.layout.list_item) {
+        myAdapter1 = new MyAdapter<Map<String, Object>>((ArrayList) listitem, R.layout.list_item) {
             @Override
             public void bindView(ViewHolder holder, Map<String, Object> obj) {
                 holder.setText(R.id.name, (CharSequence) obj.get("name"));
@@ -176,18 +173,43 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             }
         }
     }
+
+    @Override public void onStart()
+    {
+        super.onStart();
+        File logDir = getDir(userName, Context.MODE_PRIVATE);
+        String[] path = new String[]{"/symptomLogCount", "/medicineLogCount", "/doctorVisitLogCount", "/tripLogCount", "/friendsNewsLogCount", "/takeOutLogCount"};
+
+        String[] says = new String[]{"Low", "", "0 log(s)", "0 log(s)", "0 log(s)", "0 log(s)", "0 log(s)", "0 log(s)"};
+
+        for(int i = 0; i < 6; i++)
+        {
+            File file = new File(logDir.getPath() + path[i]);
+            try {
+                FileInputStream countIn = new FileInputStream(file);
+                int length = countIn.available();
+                byte [] buffer = new byte[length];
+                countIn.read(buffer);
+                countIn.close();
+                String[] ss = (new String(buffer)).split(" ");
+                says[i+2] = ss[0] + " log(s)";
+                risk[i] = ss[1];
+            } catch (Exception e) {
+                System.out.println("Read Count File Outside Failed!!! Num: " + i);
+            }
+        }
+
+        int[] imgIds = new int[]{R.mipmap.likelihood, R.mipmap.news, R.mipmap.symptom, R.mipmap.medicine, R.mipmap.doctor, R.mipmap.trip, R.mipmap.friends, R.mipmap.takeout};
+        String[] names = {"Likelihood", "News", "Symptom Log", "Medicines Log", "Doctor Visit Log", "Trip Log", "Friends News Log", "Take Out Log"};
+
+        listitem.clear();
+        for (int i = 0; i < names.length; i++) {
+            Map<String, Object> showitem = new HashMap<String, Object>();
+            showitem.put("touxiang", imgIds[i]);
+            showitem.put("name", names[i]);
+            showitem.put("says", says[i]);
+            listitem.add(showitem);
+        }
+        myAdapter1.notifyDataSetChanged();
+    }
 }
-
-//    @Override
-//    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//        if (position == 1) {
-//            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-//            startActivity(intent);
-//        }
-//        drawerLayout.closeDrawer(listLeftDrawer);
-//    }
-//}
-
-// This is a test comment by CLH
-// This is a test comment by Jin
-// This is a test comment by limin

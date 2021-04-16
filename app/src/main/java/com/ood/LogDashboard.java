@@ -35,6 +35,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class LogDashboard extends AppCompatActivity implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener{
 
@@ -48,6 +49,10 @@ public class LogDashboard extends AppCompatActivity implements AdapterView.OnIte
 
     private File logDir;
     private File logFile;
+    private File logCount;
+
+    private int logNum;
+    private int avgRisk;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +106,15 @@ public class LogDashboard extends AppCompatActivity implements AdapterView.OnIte
                 System.out.println("Create Log File Failed!!!");
             }
         }
+        logCount = new File(logDir.getPath() + path + "Count");
+        if(!logFile.exists())
+        {
+            try {
+                logFile.createNewFile();
+            } catch (IOException e) {
+                System.out.println("Create Count File Failed!!!");
+            }
+        }
 
         logList = new ArrayList<Map<String, String>>();
         loadLogFile();
@@ -115,6 +129,7 @@ public class LogDashboard extends AppCompatActivity implements AdapterView.OnIte
                 Button button = v.findViewById(R.id.deleteButon);
                 button.setOnClickListener(new View.OnClickListener()
                 {
+                    //Delete log
                     @Override
                     public void onClick(View v) {
                         logList.remove(position);
@@ -122,21 +137,33 @@ public class LogDashboard extends AppCompatActivity implements AdapterView.OnIte
                         v.setVisibility(View.INVISIBLE);
                         visibleButton = null;
 
+                        int tmpRisk = 0;
                         try {
-                            FileOutputStream out = openFileOutput(logFile.getName().toString(), MODE_PRIVATE);
+                            FileOutputStream out = new FileOutputStream(logFile);
                             String tmps = "";
                             for(int i = 0; i < logList.size(); i++)
                             {
                                 Map<String, String> tmpItem = logList.get(i);
-                                tmps += tmpItem.get("logName") + " ;" + tmpItem.get("logTime") + ";" + tmpItem.get("log") + ";;\n";
+                                tmps += tmpItem.get("logName") + ";" + tmpItem.get("logTime") + ";" + tmpItem.get("log") + ";" + tmpItem.get("risk") + ";;\n";
+                                tmpRisk += new Integer(tmpItem.get("risk"));
                             }
                             out.write(tmps.getBytes());
                             out.close();
-                            loadLogFile();
-                            logAdapter.notifyDataSetChanged();
                         } catch (Exception e) {
                             System.out.println("Write Log File Failed!!!");
                         }
+                        logNum--;
+                        avgRisk = tmpRisk / logNum;
+                        try {
+                            FileOutputStream countOut = new FileOutputStream(logCount);
+                            String tmps = "" + logNum + " " + avgRisk;
+                            countOut.write(tmps.getBytes());
+                            countOut.close();
+                        } catch (Exception e) {
+                            System.out.println("Write Count File Failed!!!");
+                        }
+                        loadLogFile();
+                        logAdapter.notifyDataSetChanged();
                     }
                 });
 
@@ -325,20 +352,33 @@ public class LogDashboard extends AppCompatActivity implements AdapterView.OnIte
             }
         });
 
+        //Create Log
         builder.setPositiveButton("Create", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                log = logNameText.getText().toString() + " ;" + showDate.getText().toString() + " " + showTime.getText().toString() + ";" + logDescriptionText.getText().toString() + " ;;\n";
+                int random = new Random().nextInt(10);
+                log = logNameText.getText().toString() + ";" + showDate.getText().toString() + " " + showTime.getText().toString() + ";"
+                        + logDescriptionText.getText().toString() + " ;" + random + ";;\n";
                 try {
-                    FileOutputStream out = openFileOutput(logFile.getName().toString(), MODE_APPEND);
-                    System.out.println(log);
+                    FileOutputStream out = new FileOutputStream(logFile, true);
                     out.write(log.getBytes());
                     out.close();
-                    loadLogFile();
-                    logAdapter.notifyDataSetChanged();
                 } catch (Exception e) {
                     System.out.println("Write Log File Failed!!!");
                 }
+                logNum = logList.size();
+                avgRisk = (avgRisk * logNum + random) / (logNum + 1);
+                logNum++;
+                try {
+                    FileOutputStream countOut = new FileOutputStream(logCount);
+                    String tmps = "" + logNum + " " + avgRisk;
+                    countOut.write(tmps.getBytes());
+                    countOut.close();
+                } catch (Exception e) {
+                    System.out.println("Write Count File Failed!!!");
+                }
+                loadLogFile();
+                logAdapter.notifyDataSetChanged();
             }
         });
 
@@ -415,9 +455,10 @@ public class LogDashboard extends AppCompatActivity implements AdapterView.OnIte
 
     private void loadLogFile()
     {
+        //Load log
         logList.clear();
         try {
-            FileInputStream in = openFileInput(logFile.getName().toString());
+            FileInputStream in = new FileInputStream(logFile);
             int length = in.available();
             byte [] buffer = new byte[length];
             in.read(buffer);
@@ -431,10 +472,24 @@ public class LogDashboard extends AppCompatActivity implements AdapterView.OnIte
                 logItem.put("logName", s[0]);
                 logItem.put("logTime", s[1]);
                 logItem.put("log", s[2]);
+                logItem.put("risk", s[3]);
                 logList.add(logItem);
             }
         } catch (Exception e) {
             System.out.println("Read Log File Failed!!!");
+        }
+
+        try {
+            FileInputStream countIn = new FileInputStream(logCount);
+            int length = countIn.available();
+            byte [] buffer = new byte[length];
+            countIn.read(buffer);
+            countIn.close();
+            String[] ss = (new String(buffer)).split(" ");
+            logNum = new Integer(ss[0]);
+            avgRisk = new Integer(ss[1]);
+        } catch (Exception e) {
+            System.out.println("Read Count File Failed!!!");
         }
 
         Collections.sort(logList, new Comparator<Map<String, String>>()
