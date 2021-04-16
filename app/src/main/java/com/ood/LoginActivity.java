@@ -39,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
         btnLogin = (Button)findViewById(R.id.login_button);
@@ -82,6 +83,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
 
     public Map<String, String> readFile(String fileName) throws IOException {
         String res="";

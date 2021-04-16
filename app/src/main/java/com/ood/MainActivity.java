@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         listLeftDrawer = (ListView) findViewById(R.id.list_left_drawer);
 
+
         Map<String, Object> item1 = new HashMap<>();
         item1.put("touxiang", R.mipmap.userinfo);
         item1.put("name", "Account Info");
@@ -61,7 +62,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         };
         listLeftDrawer.setAdapter(myAdapter);
         listLeftDrawer.setOnItemClickListener(this);
-
 
 
         // main page list view set up
@@ -93,6 +93,16 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         listView.setOnItemClickListener(this);
     }
 
+
+    // 点击返回键直接返回到手机桌面
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        Intent intent = new Intent();// 创建Intent对象
+        intent.setAction(Intent.ACTION_MAIN);// 设置Intent动作
+        intent.addCategory(Intent.CATEGORY_HOME);// 设置Intent种类
+        startActivity(intent);
+    }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
