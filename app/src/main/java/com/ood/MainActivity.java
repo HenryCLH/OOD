@@ -18,6 +18,7 @@ import android.widget.ListView;
 import android.view.MenuItem;
 import android.widget.SimpleAdapter;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -111,6 +112,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (parent == listLeftDrawer) {
             if (position == 1) {
+                try {
+                    Util.writeLoginFile("loginFile", "", this.getApplicationContext());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
             } else if (position == 0) {
@@ -123,9 +129,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         } else {
             switch (position) {
                 case 0:
-//                    Intent changePwdIntent = new Intent(MainActivity.this,ChangePassword.class);
-//                    changePwdIntent.putExtra("ID", userName);
-//                    startActivity(changePwdIntent);
+                    Intent intent = new Intent(MainActivity.this,LikelihoodActivity.class);
+                    //changePwdIntent.putExtra("ID", userName);
+                    startActivity(intent);
                     break;
                 case 1:
                     Intent intent1 = new Intent(MainActivity.this, NewsActivity.class);

@@ -64,6 +64,11 @@ public class ChangePassword extends AppCompatActivity {
                             e.printStackTrace();
                         }
                         Intent back = new Intent(ChangePassword.this, LoginActivity.class);
+                        try {
+                            Util.writeLoginFile("loginFile", "", context);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                         startActivity(back);
                     } else {
                         vMessage.setText("Conform password should match with password.");
