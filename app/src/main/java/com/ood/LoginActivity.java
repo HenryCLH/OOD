@@ -1,5 +1,6 @@
 package com.ood;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import com.ood.Util;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -42,6 +44,9 @@ public class LoginActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
+
+        Context context = this.getApplicationContext();
+
         btnLogin = (Button)findViewById(R.id.login_button);
         vNewAccount = findViewById(R.id.register);
         roundImageView = (RoundImageView) findViewById(R.id.showImg);
@@ -55,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
                 // get userData from database
                 Map<String, String> userData = new HashMap<>();
                 try {
-                    userData = readFile("userData");
+                    userData = Util.readFile("userData", context);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -68,6 +73,7 @@ public class LoginActivity extends AppCompatActivity {
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         String hashcode = String.valueOf(userName.hashCode());
                         intent.putExtra("userName", hashcode);
+                        intent.putExtra("nameString", userName);
                         startActivity(intent);
                 } else {
                     vMessage.setText("Oops! You email/phone or password is incorrect");
@@ -82,29 +88,5 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
-
-
-    public Map<String, String> readFile(String fileName) throws IOException {
-        String res="";
-        try{
-            FileInputStream fin = openFileInput(fileName);
-            int length = fin.available();
-            byte [] buffer = new byte[length];
-            fin.read(buffer);
-            //设置编码格式
-            res = EncodingUtils.getString(buffer, "UTF-8");
-            fin.close();
-        }catch(Exception e){
-            e.printStackTrace();
-            return null;
-        }
-        String[] rawData = res.split("\n");
-        Map<String, String> map = new HashMap<>();
-        for (String data : rawData) {
-            String[] temp = data.split(" ");
-            map.put(temp[0], temp[1]);
-        }
-        return map;
     }
 }
