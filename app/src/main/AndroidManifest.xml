@@ -12,8 +12,9 @@
         android:roundIcon="@mipmap/icon1"
         android:supportsRtl="true"
         android:theme="@style/Theme.OOD">
-        <activity android:name=".RegisterActivity"></activity>
-        <activity android:name=".LogDashboard"></activity>
+        <activity android:name=".ChangePassword"></activity>
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".LogDashboard" />
         <activity android:name=".NewsActivity" />
         <activity android:name=".LikelihoodActivity" />
         <activity android:name=".MainActivity">
@@ -32,8 +33,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LikelihoodActivity"></activity>
-        <activity android:name=".NewsActivity"></activity>
+        <activity android:name=".LikelihoodActivity" />
+        <activity android:name=".NewsActivity" />
     </application>
 
 </manifest>

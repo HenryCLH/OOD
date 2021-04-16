@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import com.ood.Util;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -33,6 +34,7 @@ public class RegisterActivity extends AppCompatActivity {
         vPassword = findViewById(R.id.passwd_edit);
         vMessage = findViewById(R.id.message);
         vRepassword = findViewById(R.id.repassword_edit);
+        Context context = this.getApplicationContext();
 
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,7 +48,8 @@ public class RegisterActivity extends AppCompatActivity {
                     vMessage.setText("Please enter valid email/phone");
                 } else {
                     try {
-                        writeFile("userData", userName + " " + password);
+                        Util.writeFile("userData", userName + " " +
+                                password + "\n", context);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -59,16 +62,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    public void writeFile(String fileName,String writestr) throws IOException {
-        try{
-            FileOutputStream fout = openFileOutput(fileName, Context.MODE_PRIVATE);
-            byte [] bytes = writestr.getBytes();
-            fout.write(bytes);
-            fout.close();
-        } catch(Exception e){
-            e.printStackTrace();
-        }
-    }
 
     private boolean checkValidation(String input) {
         return validateEmail(input) || validatePhoneNum(input);

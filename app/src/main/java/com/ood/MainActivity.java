@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     //private MyAdapter<ClipData.Item> myAdapter = null;
 
     private String userName = "1001";
+    private String nameString = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +38,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         setContentView(R.layout.activity_main);
         Intent intent = getIntent();
         userName = intent.getStringExtra("userName");
+        nameString = intent.getStringExtra("nameString");
+
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         listLeftDrawer = (ListView) findViewById(R.id.list_left_drawer);
 
         Map<String, Object> item1 = new HashMap<>();
         item1.put("touxiang", R.mipmap.userinfo);
-        item1.put("name", "Account Info");
+        item1.put("name", "Change Password");
         item1.put("says", "");
         Map<String, Object> item2 = new HashMap<>();
         item2.put("touxiang", R.mipmap.logout);
@@ -100,13 +103,19 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             if (position == 1) {
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
+            } else if (position == 0) {
+                Intent changePwdIntent = new Intent(MainActivity.this, ChangePassword.class);
+                changePwdIntent.putExtra("ID", userName);
+                changePwdIntent.putExtra("nameString", nameString);
+                startActivity(changePwdIntent);
             }
             drawerLayout.closeDrawer(listLeftDrawer);
         } else {
             switch (position) {
                 case 0:
-                    Intent intent = new Intent(MainActivity.this, LikelihoodActivity.class);
-                    startActivity(intent);
+//                    Intent changePwdIntent = new Intent(MainActivity.this,ChangePassword.class);
+//                    changePwdIntent.putExtra("ID", userName);
+//                    startActivity(changePwdIntent);
                     break;
                 case 1:
                     Intent intent1 = new Intent(MainActivity.this, NewsActivity.class);
