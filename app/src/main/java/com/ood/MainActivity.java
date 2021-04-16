@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private MyAdapter<Map<String, Object>> myAdapter1;
 
     private String[] risk;
+    private String[] numOfLogs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Intent intent = getIntent();
         userName = intent.getStringExtra("userName");
         nameString = intent.getStringExtra("nameString");
+        numOfLogs = new String[] {"0","0","0","0","0","0"};
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         listLeftDrawer = (ListView) findViewById(R.id.list_left_drawer);
@@ -127,6 +129,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             switch (position) {
                 case 0:
                     Intent intent = new Intent(MainActivity.this,LikelihoodActivity.class);
+                    int likelihood = getLikelihood();
+                    intent.putExtra("risk", likelihood);
+                    for(int i=0; i<numOfLogs.length; i++) {
+                        intent.putExtra(String.valueOf(i), numOfLogs[i]);
+                    }
+                    System.out.println(likelihood);
                     //changePwdIntent.putExtra("ID", userName);
                     startActivity(intent);
                     break;
@@ -193,10 +201,18 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 countIn.close();
                 String[] ss = (new String(buffer)).split(" ");
                 says[i+2] = ss[0] + " log(s)";
+                numOfLogs[i] = ss[0];
                 risk[i] = ss[1];
             } catch (Exception e) {
                 System.out.println("Read Count File Outside Failed!!! Num: " + i);
             }
+        }
+
+        int likelihood = getLikelihood();
+        if(likelihood > 3) {
+            says[0] = "High";
+        }else {
+            says[0] = "Low";
         }
 
         int[] imgIds = new int[]{R.mipmap.likelihood, R.mipmap.news, R.mipmap.symptom, R.mipmap.medicine, R.mipmap.doctor, R.mipmap.trip, R.mipmap.friends, R.mipmap.takeout};
@@ -211,5 +227,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             listitem.add(showitem);
         }
         myAdapter1.notifyDataSetChanged();
+    }
+
+    public int getLikelihood() {
+        int likelihood=0;
+        for(int i=0; i<risk.length; i++) {
+            likelihood += Integer.parseInt(risk[i]);
+        }
+        likelihood = likelihood / risk.length;
+        return likelihood;
     }
 }

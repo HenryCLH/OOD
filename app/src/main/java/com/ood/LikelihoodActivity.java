@@ -2,6 +2,7 @@ package com.ood;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -36,13 +37,20 @@ public class LikelihoodActivity extends AppCompatActivity {
         takeout = (TextView) findViewById(R.id.num_take_out);
         result = (TextView) findViewById(R.id.result);
 
-        symptom.setText("You have " + Integer.toString(numOfDiffLogs[0]) + " symptom log(s).");
-        medicine.setText("You have " + Integer.toString(numOfDiffLogs[1]) + " medicine log(s).");
-        doctorVisit.setText("You have " + Integer.toString(numOfDiffLogs[2]) + " doctor visit log(s).");
-        trip.setText("You have " + Integer.toString(numOfDiffLogs[3]) + " trip log(s).");
-        friendsNews.setText("You have " + Integer.toString(numOfDiffLogs[4]) + " friends news log(s).");
-        takeout.setText("You have " + Integer.toString(numOfDiffLogs[5]) + " takeout log(s).");
-        result.setText("According to our algorithm, we speculate that your probability of infecting COVID-19 is Low.");
+        Intent intent = getIntent();
+        String risk = "Low";
+        if(intent.getIntExtra("risk", 0) > 3) {
+            risk = "High";
+        }
+        System.out.println("=======");
+        System.out.println(intent.getIntExtra("risk", 0));
+        symptom.setText("You have " + intent.getStringExtra("0") + " symptom log(s).");
+        medicine.setText("You have " + intent.getStringExtra("1") + " medicine log(s).");
+        doctorVisit.setText("You have " + intent.getStringExtra("2") + " doctor visit log(s).");
+        trip.setText("You have " + intent.getStringExtra("3") + " trip log(s).");
+        friendsNews.setText("You have " + intent.getStringExtra("4") + " friends news log(s).");
+        takeout.setText("You have " + intent.getStringExtra("5") + " takeout log(s).");
+        result.setText("According to our algorithm, we speculate that your probability of infecting COVID-19 is "+risk+".");
 
     }
 
