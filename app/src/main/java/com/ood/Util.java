@@ -1,6 +1,8 @@
 package com.ood;
 
+import android.app.Activity;
 import android.content.Context;
+import android.view.Window;
 
 import org.apache.http.util.EncodingUtils;
 
@@ -82,6 +84,13 @@ public class Util {
         }
         return res;
     }
+
+
+//    public static void setTitle(Activity activity, int resId) {
+//        activity.requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
+//        activity.setContentView(resId); // activity的布局
+//        activity.getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, title);// 标题栏的布局
+//    }
 
 
 }
