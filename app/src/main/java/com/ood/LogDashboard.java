@@ -69,31 +69,37 @@ public class LogDashboard extends AppCompatActivity implements AdapterView.OnIte
             case 2:
             {
                 path = "/symptomLog";
+                this.getSupportActionBar().setTitle("Symptom Log");
                 break;
             }
             case 3:
             {
                 path = "/medicineLog";
+                this.getSupportActionBar().setTitle("Medicine Log");
                 break;
             }
             case 4:
             {
                 path = "/doctorVisitLog";
+                this.getSupportActionBar().setTitle("Doctor Visit Log");
                 break;
             }
             case 5:
             {
                 path = "/tripLog";
+                this.getSupportActionBar().setTitle("Trip Log");
                 break;
             }
             case 6:
             {
                 path = "/friendsNewsLog";
+                this.getSupportActionBar().setTitle("Friends News Log");
                 break;
             }
             case 7:
             {
                 path = "/takeOutLog";
+                this.getSupportActionBar().setTitle("Take Out Log");
                 break;
             }
         }
