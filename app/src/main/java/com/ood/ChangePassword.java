@@ -31,7 +31,7 @@ public class ChangePassword extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_password);
-
+        setTitle("Change Pass");
         Intent intent = getIntent();
         Context context = this.getApplicationContext();
         vOldPassword = findViewById(R.id.old_password_edit);

@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setTitle("COVID Dashboard");
         Intent intent = getIntent();
         userName = intent.getStringExtra("userName");
         nameString = intent.getStringExtra("nameString");
@@ -209,10 +210,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
 
         int likelihood = getLikelihood();
-        if(likelihood > 3) {
-            says[0] = "High";
-        }else {
+        if(likelihood <= 3) {
             says[0] = "Low";
+        }else if(likelihood > 3 && likelihood <= 7) {
+            says[0] = "Medium";
+        } else {
+            says[0] = "High";
         }
 
         int[] imgIds = new int[]{R.mipmap.likelihood, R.mipmap.news, R.mipmap.symptom, R.mipmap.medicine, R.mipmap.doctor, R.mipmap.trip, R.mipmap.friends, R.mipmap.takeout};

@@ -29,6 +29,7 @@ public class LikelihoodActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_likelihood);
+        setTitle("Likelihood");
         symptom = (TextView) findViewById(R.id.num_symptom);
         medicine = (TextView) findViewById(R.id.num_medicines);
         doctorVisit = (TextView) findViewById(R.id.num_doctor_visit);
@@ -39,7 +40,11 @@ public class LikelihoodActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String risk = "Low";
-        if(intent.getIntExtra("risk", 0) > 3) {
+        if(intent.getIntExtra("risk", 0) <= 3) {
+            risk = "Low";
+        } else if(intent.getIntExtra("risk", 0) >3 && intent.getIntExtra("risk", 0) < 7) {
+            risk = "Medium";
+        } else {
             risk = "High";
         }
         System.out.println("=======");
